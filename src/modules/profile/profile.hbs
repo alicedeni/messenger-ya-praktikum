@@ -1,0 +1,17 @@
+<form class="profile-form">
+    <div class="profile-form__avatar">
+        <input type="file" id="avatar" accept="image/*" class="profile-form__avatar-input" />
+        <img id="avatarImage" class="profile-form__avatar-image" src="{{avatar}}" alt="Avatar" />
+        <div class="profile-form__avatar-overlay">Edit photo</div>
+    </div>
+    <h1>{{display_name}}</h1>
+
+    <div class="profile-form__info"></div>
+
+    <button type="button" id="editData" class="profile-form__button">edit data</button>
+    <div class="profile-form__info-line"></div>
+    <button type="button" class="profile-form__button">edit password</button>
+    <div class="profile-form__info-line"></div>
+    <button type="button" class="profile-form__button-exit">exit</button>
+    <button type="button" id="saveData" style="display:none;">Save</button>
+</form>

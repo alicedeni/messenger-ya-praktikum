@@ -1,0 +1,24 @@
+.chat-page {
+    display: flex;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 100vw;
+
+    &__content {
+        display: flex;
+        flex-grow: 1;
+
+        &-list {
+            width: 310px;
+            border-right: 1px solid #EAEAEA;
+            background: #FBFBFB;
+            padding: 15px 0;
+        }
+
+        &-display {
+            width: auto;
+            flex-grow: 1;
+            padding: 20px;
+        }
+    }
+}

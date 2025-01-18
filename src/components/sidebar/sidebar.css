@@ -1,0 +1,19 @@
+.sidebar {
+    background: radial-gradient(circle, rgba(43, 38, 33, 0.8) 0%, rgba(13, 7, 4, 0.8) 100%);
+    padding: 13px 0;
+    display: flex;
+    justify-content: center;
+    width: 60px;
+
+    .sidebar__nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .sidebar__nav-link {
+            color: #EFEFEF;
+            font-size: 9px;
+            margin-top: -5px;
+        }
+    }
+}

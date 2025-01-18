@@ -1,0 +1,31 @@
+.input {
+    position: relative;
+    margin-bottom: 20px;
+
+    &__field {
+        border: none;
+        border-bottom: 2px solid black;
+        outline: none;
+        font-size: 13px;
+        padding: 10px 0;
+        width: 280px;
+        background: transparent;
+
+        &:valid + .input__placeholder,
+        &:focus + .input__placeholder {
+            top: -10px;
+            left: 0;
+            font-size: 9px;
+        }
+    }
+
+    &__placeholder {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        font-size: 13px;
+        color: #999;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+}
