@@ -3,7 +3,7 @@ import RegistrationPage from './pages/registrationPage.js'
 import NotFound from './pages/notFound.js'
 import ChatPage from './pages/chatPage.js'
 import ProfilePage from './pages/profilePage.js'
-import ServerError from './pages/ServerError.js'
+import ServerError from './pages/serverError.js'
 
 const routes = {
   '/': LoginPage,
