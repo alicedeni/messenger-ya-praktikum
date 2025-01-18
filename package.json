@@ -22,5 +22,8 @@
     "handlebars": "^4.7.8",
     "lodash-es": "^4.17.21",
     "prettier": "^3.4.2"
+  },
+  "engines": {
+    "node": "16.0.0"
   }
 }
