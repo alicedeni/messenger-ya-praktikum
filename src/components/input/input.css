@@ -1,10 +1,12 @@
+@import "../../style.css";
+
 .input {
     position: relative;
     margin-bottom: 20px;
 
     &__field {
         border: none;
-        border-bottom: 2px solid black;
+        border-bottom: 2px solid var(--color-black);
         outline: none;
         font-size: 13px;
         padding: 10px 0;
@@ -24,7 +26,7 @@
         left: 0;
         top: 10px;
         font-size: 13px;
-        color: #999;
+        color: var(--color-dark-gray);
         pointer-events: none;
         transition: all 0.3s ease;
     }

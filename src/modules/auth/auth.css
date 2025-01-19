@@ -1,5 +1,7 @@
+@import "../../style.css";
+
 .form {
-    background: #FBF4D8;
+    background: var(--color-light-yellow);
     border-radius: 12px;
     padding: 30px;
     display: flex;

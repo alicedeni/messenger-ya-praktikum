@@ -1,3 +1,5 @@
+@import "../../style.css";
+
 .input-profile {
     display: flex;
     justify-content: space-between;
@@ -8,7 +10,7 @@
 
     &__field {
         font-size: 13px;
-        color: #999;
+        color: var(--color-dark-gray);
         border: none;
         background: transparent;
         outline: none;

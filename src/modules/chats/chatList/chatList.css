@@ -1,3 +1,5 @@
+@import "../../../style.css";
+
 .chat-list {
     display: flex;
     flex-direction: column;
@@ -9,7 +11,7 @@
         margin-bottom: 24px;
 
         &-input {
-            background: #EFEFEF;
+            background: var(--color-light-gray);
             border: none;
             border-radius: 5px;
             height: 32px;
@@ -29,7 +31,7 @@
 
     &__line {
         height: 1px;
-        background: #EAEAEA;
+        background: var(--color-gray);
         width: 100%;
     }
 
@@ -41,7 +43,7 @@
         width: 100%;
 
         &:hover {
-            background: #FBF4D8;
+            background: var(--color-light-yellow);
         }
 
         .chat-image {
@@ -65,7 +67,7 @@
 
                 &-time {
                     font-size: 9px;
-                    color: #999;
+                    color: var(--color-dark-gray);
                 }
             }
 
@@ -74,12 +76,12 @@
                 justify-content: space-between;
 
                 &-text {
-                    color: #999;
+                    color: var(--color-dark-gray);
                     font-size: 12px;
                 }
 
                 .unread-count {
-                    background: #FCD400;
+                    background: var(--color-yellow);
                     color: white;
                     border-radius: 10px;
                     width: 20px;

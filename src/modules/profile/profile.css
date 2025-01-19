@@ -1,3 +1,5 @@
+@import "../../style.css";
+
 .profile-form {
     display: flex;
     flex-direction: column;
@@ -30,7 +32,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: var(--color-overlay);
             color: white;
             font-size: 14px;
             font-weight: bold;
@@ -51,20 +53,20 @@
         &-line {
             height: 1px;
             width: 100%;
-            background: #EAEAEA;
+            background: var(--color-gray);
         }
     }
 
     &__button {
         border: none;
         background: transparent;
-        color: #FCD400;
+        color: var(--color-yellow);
         text-align: left;
 
         &-exit {
             border: none;
             background: transparent;
-            color: #FF0000;
+            color: var(--color-red);
             text-align: left;
         }
     }

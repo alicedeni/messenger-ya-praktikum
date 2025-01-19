@@ -1,4 +1,6 @@
+@import "../../../style.css";
+
 .chat-display__text {
-    color: #999;
+    color: var(--color-dark-gray);
     font-size: 12px;
 }

@@ -1,5 +1,7 @@
+@import "../../style.css";
+
 button {
-    background-color: #0D0704;
+    background-color: var(--color-black);
     width: 280px;
     height: 38px;
     color: white;
