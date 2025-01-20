@@ -1,0 +1,25 @@
+<div class="chat-list">
+    <div class="chat-list__search">
+        <img src="search.svg" alt="Search Icon" class="chat-list__search-icon" />
+        <input type="text" placeholder="Search" class="chat-list__search-input" />
+    </div>
+    <div class="chat-list__line"></div>
+    {{#each chats}}
+        <div class="chat-list__item">
+            <img src="{{this.image}}" alt="{{this.name}}" class="chat-image" />
+            <div class="chat-list__item-details">
+                <div class="chat-list__item-details-header">
+                    <span class="chat-list__item-details-header-name">{{this.name}}</span>
+                    <span class="chat-list__item-details-header-time">{{this.time}}</span>
+                </div>
+                <div class="chat-list__item-details-message">
+                    <span class="chat-list__item-details-message-text">{{this.text}}</span>
+                    {{#if this.unread}}
+                        <span class="unread-count">{{this.unread}}</span>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        <div class="chat-list__line"></div>
+    {{/each}}
+</div>

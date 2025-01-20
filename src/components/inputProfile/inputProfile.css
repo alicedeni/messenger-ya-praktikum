@@ -1,0 +1,21 @@
+@import "../../style.css";
+
+.input-profile {
+    display: flex;
+    justify-content: space-between;
+
+    &__placeholder {
+        font-size: 13px;
+    }
+
+    &__field {
+        font-size: 13px;
+        color: var(--color-dark-gray);
+        border: none;
+        background: transparent;
+        outline: none;
+        padding: 0;
+        text-align: right;
+    }
+
+}

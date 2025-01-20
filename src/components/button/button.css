@@ -1,0 +1,11 @@
+@import "../../style.css";
+
+button {
+    background-color: var(--color-black);
+    width: 280px;
+    height: 38px;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

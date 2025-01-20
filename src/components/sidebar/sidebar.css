@@ -1,0 +1,21 @@
+@import "../../style.css";
+
+.sidebar {
+    background: var(--gradient);
+    padding: 13px 0;
+    display: flex;
+    justify-content: center;
+    width: 60px;
+
+    .sidebar__nav {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .sidebar__nav-link {
+            color: var(--color-light-gray);
+            font-size: 9px;
+            margin-top: -5px;
+        }
+    }
+}

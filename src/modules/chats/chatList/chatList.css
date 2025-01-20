@@ -1,0 +1,95 @@
+@import "../../../style.css";
+
+.chat-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+
+    &__search {
+        position: relative;
+        margin-bottom: 24px;
+
+        &-input {
+            background: var(--color-light-gray);
+            border: none;
+            border-radius: 5px;
+            height: 32px;
+            width: 290px;
+            text-align: center;
+        }
+
+        &-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &__line {
+        height: 1px;
+        background: var(--color-gray);
+        width: 100%;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        padding: 12px 10px;
+        cursor: pointer;
+        width: 100%;
+
+        &:hover {
+            background: var(--color-light-yellow);
+        }
+
+        .chat-image {
+            width: 47px;
+            height: 47px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        &-details {
+            flex-grow: 1;
+
+            &-header {
+                display: flex;
+                justify-content: space-between;
+
+                &-name {
+                    font-weight: bold;
+                    font-size: 13px;
+                }
+
+                &-time {
+                    font-size: 9px;
+                    color: var(--color-dark-gray);
+                }
+            }
+
+            &-message {
+                display: flex;
+                justify-content: space-between;
+
+                &-text {
+                    color: var(--color-dark-gray);
+                    font-size: 12px;
+                }
+
+                .unread-count {
+                    background: var(--color-yellow);
+                    color: white;
+                    border-radius: 10px;
+                    width: 20px;
+                    height: 20px;
+                    text-align: center;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
