@@ -1,16 +1,18 @@
-@import "../../style.css";
+@import url("../../style.css");
 
 .sidebar {
     background: var(--gradient);
-    padding: 13px 0;
+
     display: flex;
     justify-content: center;
     width: 60px;
+    height: 100vh;
 
     .sidebar__nav {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        padding: 13px 0;
 
         .sidebar__nav-link {
             color: var(--color-light-gray);

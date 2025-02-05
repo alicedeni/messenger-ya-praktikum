@@ -1,8 +1,9 @@
-@import "../../style.css";
+@import url("../../style.css");
 
 .input {
     position: relative;
     margin-bottom: 20px;
+    height: 50px;
 
     &__field {
         border: none;
@@ -29,5 +30,13 @@
         color: var(--color-dark-gray);
         pointer-events: none;
         transition: all 0.3s ease;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 8px;
+        margin-top: 4px;
+        display: block;
+        height: 16px;
     }
 }

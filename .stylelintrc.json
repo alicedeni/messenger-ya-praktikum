@@ -1,0 +1,19 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-length": "short",
+    "color-function-notation": "modern",
+    "alpha-value-notation": "percentage",
+    "import-notation": "url",
+    "selector-class-pattern": null,
+    "declaration-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "shorthand-property-no-redundant-values": true,
+    "no-descending-specificity": null,
+    "value-keyword-case": "lower"
+  },
+  "ignoreFiles": [
+    "build/*",
+    "dist/*"
+  ]
+}

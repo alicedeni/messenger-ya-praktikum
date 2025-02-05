@@ -1,0 +1,22 @@
+.chat-message {
+    margin-bottom: 10px;
+    width: auto;
+    max-width: 45%;
+    padding: 10px;
+
+    &--other {
+        background-color: var(--color-light-gray);
+        text-align: left;
+        border-radius: 0 10px 10px;
+    }
+
+    &__text {
+        display:inline-block;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    &__time {
+        font-size: 12px;
+    }
+}

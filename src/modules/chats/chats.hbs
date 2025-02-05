@@ -1,0 +1,32 @@
+<div class="chat-page">
+    {{{sidebar}}}
+    <div class="chat-page__content">
+        <aside class="chat-page__content-list">
+            {{{chatList}}}
+        </aside>
+        <main class="chat-page__content-display">
+            {{#if chatName}}
+                <div class="chat-display">
+                    <div class="chat-display__header">
+                        <img src="{{{avatar}}}" alt="{{{chatName}}}" class="chat-display__header-avatar" />
+                        <h2 class="chat-display__header-name">{{{chatName}}}</h2>
+                    </div>
+                    <div class="chat-display__messages">
+                        {{{messagesContainer}}}
+                    </div>
+                    <div class="chat-display__input-container">
+                        <button class="chat-display__send-button" id="attachButton">
+                            <img src="clip.svg" alt="Attach" />
+                        </button>
+                        <input type="text" placeholder="Message" class="chat-display__message-input" id="messageInput" />
+                        <button class="chat-display__send-button" id="sendButton">
+                            <img src="arrow.svg" alt="Send" />
+                        </button>
+                    </div>
+                </div>
+            {{else}}
+                <p class="chat-display__text">Select a chat to send a message</p>
+            {{/if}}
+        </main>
+    </div>
+</div>

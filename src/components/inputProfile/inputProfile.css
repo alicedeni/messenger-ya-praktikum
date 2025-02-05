@@ -1,8 +1,11 @@
-@import "../../style.css";
+@import url("../../style.css");
 
 .input-profile {
-    display: flex;
-    justify-content: space-between;
+    height: 40px;
+    &-input {
+        display: flex;
+        justify-content: space-between;
+    }
 
     &__placeholder {
         font-size: 13px;
@@ -16,6 +19,15 @@
         outline: none;
         padding: 0;
         text-align: right;
+    }
+
+    &__error {
+        color: red;
+        font-size: 8px;
+        display: block;
+        height: 16px;
+        text-align: right;
+        margin-top: -6px;
     }
 
 }

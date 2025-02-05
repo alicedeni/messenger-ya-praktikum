@@ -1,4 +1,7 @@
 <div class="input-profile">
+    <div class="input-profile-input">
     <label class="input-profile__placeholder">{{placeholder}}</label>
-    <input type="{{type}}" name="{{name}}" class="input-profile__field" value="{{value}}" disabled />
+    <input type="{{type}}" name="{{name}}" class="input-profile__field" value="{{value}}" {{#if disabled}}disabled{{/if}}/>
+    </div>
+    <span class="input-profile__error"></span>
 </div>

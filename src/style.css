@@ -4,21 +4,21 @@
   font-weight: 400;
 
   color-scheme: light;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgb(255 255 255 / 87%);
 
-  --gradient: radial-gradient(circle, rgba(43, 38, 33, 0.8) 0%, rgba(13, 7, 4, 0.8) 100%);
+  --gradient: radial-gradient(circle, rgb(43 38 33 / 80%) 0%, rgb(13 7 4 / 80%) 100%);
   --color-black: #0D0704;
   --color-yellow: #FCD400;
   --color-light-yellow: #FBF4D8;
-  --color-red: #FF0000;
+  --color-red: #F00;
   --color-gray: #EAEAEA;
   --color-light-gray: #EFEFEF;
   --color-white-gray: #FBFBFB;
-  --color-dark-gray: #999999;
-  --color-overlay: rgba(0, 0, 0, 0.7);
+  --color-dark-gray: #999;
+  --color-overlay: rgb(0 0 0 / 70%);
 
   font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
