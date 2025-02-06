@@ -45,12 +45,13 @@ export class Block<P extends Record<string, unknown> = Record<string, unknown>> 
   }
 
   private _render(): void {
+    this._removeEvents()
     const content = this.render()
     if (this.element) {
       this.element.innerHTML = ''
       this.element.insertAdjacentHTML('beforeend', content)
-      this._addEvents()
     }
+    this._addEvents()
   }
 
   render(): string {
@@ -65,6 +66,22 @@ export class Block<P extends Record<string, unknown> = Record<string, unknown>> 
       const handler = events[eventName]
       if (typeof handler === 'function') {
         this.element!.addEventListener(eventName, handler)
+      }
+    })
+  }
+
+  private _removeEvents(): void {
+    const { events = {} } = this.props as { events?: Record<string, (e: Event) => void> }
+
+    Object.keys(events).forEach((eventName) => {
+      if (typeof events[eventName] === 'function') {
+        if (this.element) {
+          try {
+            this.element.removeEventListener(eventName, events[eventName])
+          } catch (error) {
+            console.error(`Error deleting listener ${eventName}:`, error)
+          }
+        }
       }
     })
   }
