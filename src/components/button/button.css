@@ -1,4 +1,4 @@
-@import "../../style.css";
+@import url("../../style.css");
 
 button {
     background-color: var(--color-black);
@@ -8,4 +8,14 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    pointer-events: auto;
+}
+
+button:hover {
+    background-color: var(--color-dark-gray);
+}
+
+button:active {
+    background-color: var(--color-gray);
 }

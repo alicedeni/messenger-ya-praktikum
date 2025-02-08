@@ -1,4 +1,41 @@
-@import "../../style.css";
+@import url("../../style.css");
+.auth-layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+
+    &__image-section {
+        flex: 1;
+        background: var(--gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70%;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    &__form-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 30%;
+    }
+
+    h1 {
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+}
 
 .form {
     background: var(--color-light-yellow);
@@ -8,5 +45,5 @@
     flex-direction: column;
     align-items: center;
     width: 340px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 15px rgb(0 0 0 / 20%);
 }

@@ -1,0 +1,15 @@
+@import url("../../style.css");
+
+.chat-message {
+
+    &--user {
+        background-color: var(--color-light-yellow);
+        text-align: right;
+        border-radius: 10px 10px 0;
+        display: flex;
+        justify-content: flex-end;
+        margin-left: auto;
+    }
+
+}
+

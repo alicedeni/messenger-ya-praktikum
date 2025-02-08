@@ -1,17 +1,29 @@
-<form class="profile-form">
-    <div class="profile-form__avatar">
-        <input type="file" id="avatar" accept="image/*" class="profile-form__avatar-input" />
-        <img id="avatarImage" class="profile-form__avatar-image" src="{{avatar}}" alt="Avatar" />
-        <div class="profile-form__avatar-overlay">Edit photo</div>
-    </div>
-    <h1>{{display_name}}</h1>
+<div class="profile-page">
+    {{{sidebar}}}
+    <main class="profile-page__content">
+        <form class="profile-form">
+            <div class="profile-form__avatar">
+                <input type="file" id="avatar" accept="image/*" class="profile-form__avatar-input" />
+                <img id="avatarImage" class="profile-form__avatar-image" src="{{avatar}}" alt="Avatar" />
+                <div class="profile-form__avatar-overlay">Edit photo</div>
+            </div>
+            <h1>{{{display_name}}}</h1>
 
-    <div class="profile-form__info"></div>
+            <div class="profile-form__info">
+                {{{emailInput}}}
+                {{{loginInput}}}
+                {{{firstNameInput}}}
+                {{{secondNameInput}}}
+                {{{displayNameInput}}}
+                {{{phoneInput}}}
+            </div>
 
-    <button type="button" id="editData" class="profile-form__button">edit data</button>
-    <div class="profile-form__info-line"></div>
-    <button type="button" class="profile-form__button">edit password</button>
-    <div class="profile-form__info-line"></div>
-    <button type="button" class="profile-form__button-exit">exit</button>
-    <button type="button" id="saveData" style="display:none;">Save</button>
-</form>
+            <button type="button" id="editData" class="profile-form__button">Edit Data</button>
+            <div class="profile-form__info-line"></div>
+            <button type="button" class="profile-form__button">Edit Password</button>
+            <div class="profile-form__info-line"></div>
+            <button type="button" class="profile-form__button-exit">Exit</button>
+            <button type="button" id="saveData" style="display:none;">Save</button>
+        </form>
+    </main>
+</div>
