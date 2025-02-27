@@ -23,6 +23,7 @@ class WebSocketService {
       })
 
       this.socket.addEventListener('close', (event: CloseEvent) => {
+        this.stopPing()
         if (event.wasClean) {
           console.log('Connection closed clear')
         } else {

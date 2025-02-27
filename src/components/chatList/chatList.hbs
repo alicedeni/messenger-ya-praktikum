@@ -6,16 +6,14 @@
     <div class="chat-list__line"></div>
     {{#each chats}}
         <div class="chat-list__item">
-            {{#if this.avatar}}
-                <img src="{{this.avatar}}" alt="{{this.title}}" class="chat-image" />
-            {{else}}
-                <img src="gray.jpg" alt="{{this.title}}" class="chat-image" />
-            {{/if}}
+            <img src="{{this.image}}" alt="{{this.title}}" class="chat-image" />
             <div class="chat-list__item-details">
                 <div class="chat-list__item-details-header">
                     <span class="chat-list__item-details-header-name">{{this.title}}</span>
+                    <span class="chat-list__item-details-header-time">{{this.time}}</span>
                 </div>
                 <div class="chat-list__item-details-message">
+                    <span class="chat-list__item-details-message-text">{{this.text}}</span>
                     {{#if this.unread_count}}
                         <span class="unread-count">{{this.unread_count}}</span>
                     {{/if}}

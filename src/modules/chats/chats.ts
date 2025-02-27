@@ -9,6 +9,7 @@ import { compileTemplate } from '../../utils/template'
 import WebSocketService from '../../services/webSocketService'
 import { ChatService } from '../../services/chatService'
 import { AuthService } from '../../services/authService'
+import { Chat } from '../../components/chatList/chatList'
 
 const appElement = document.getElementById('app')
 
@@ -23,6 +24,7 @@ interface ChatDisplayProps extends Record<string, unknown> {
   chatName?: string
   avatar?: string
   messages: Message[]
+  chats: Chat[]
   onSendMessage: (message: string) => void
 }
 
@@ -34,7 +36,7 @@ export default class Chats extends Block<ChatDisplayProps> {
   private authService: AuthService
 
   constructor(props: ChatDisplayProps) {
-    super(props)
+    super({ ...props, chats: props.chats || [] })
     this.chatService = new ChatService()
     this.authService = new AuthService()
     this.sidebar = new Sidebar()
@@ -124,6 +126,16 @@ export default class Chats extends Block<ChatDisplayProps> {
           } else {
             console.error('Connection not established')
           }
+          this.updateChatList().then(() => {
+            this.chatList = new ChatList({
+              chats: this.props.chats || [],
+              onChatSelect: (chat) => {
+                console.log('Selected chat:', chat)
+                this.connectToChat(chat)
+              },
+            })
+            this.render()
+          })
 
           messageInput.value = ''
         } else {
@@ -156,6 +168,7 @@ export default class Chats extends Block<ChatDisplayProps> {
     try {
       await this.chatService.addUsersToChat(userIds, chatId)
       console.log('Users added to chat')
+      await this.updateChatList()
     } catch (error) {
       console.error('Error adding users to chat:', error)
     }
@@ -165,27 +178,19 @@ export default class Chats extends Block<ChatDisplayProps> {
     try {
       await this.chatService.deleteUsersFromChat(userIds, chatId)
       console.log('Users removed from chat')
+      await this.updateChatList()
     } catch (error) {
       console.error('Error when deleting users from chat:', error)
-    }
-  }
-
-  public async deleteChat(chatId: number): Promise<void> {
-    try {
-      await this.chatService.deleteChat(chatId)
-      console.log('Chat deleted')
-      this.updateChatList()
-    } catch (error) {
-      console.error('Error deleting chat:', error)
     }
   }
 
   private async updateChatList(): Promise<void> {
     try {
       const chats = await this.chatService.getChats()
-      this.setProps({ chats })
+      this.setProps({ chats: Array.isArray(chats) ? chats : [] })
     } catch (error) {
       console.error('Error updating chat list:', error)
+      this.setProps({ chats: [] })
     }
   }
 
@@ -217,8 +222,8 @@ export default class Chats extends Block<ChatDisplayProps> {
     const chatId = chat.id
     const tokenResponse = await this.chatService.getChatToken(chatId)
 
-    if (tokenResponse) {
-      const token = tokenResponse.token
+    if (tokenResponse && typeof tokenResponse === 'object' && 'token' in tokenResponse) {
+      const token = tokenResponse.token as string
       this.webSocketService = new WebSocketService({ userId, chatId, token })
       this.webSocketService.connect()
 
@@ -241,6 +246,16 @@ export default class Chats extends Block<ChatDisplayProps> {
               },
             ],
           })
+          this.updateChatList().then(() => {
+            this.chatList = new ChatList({
+              chats: this.props.chats || [],
+              onChatSelect: (chat) => {
+                console.log('Selected chat:', chat)
+                this.connectToChat(chat)
+              },
+            })
+            this.render()
+          })
         } else if (Array.isArray(message)) {
           const oldMessages = message
             .map((msg) => ({
@@ -256,7 +271,7 @@ export default class Chats extends Block<ChatDisplayProps> {
       this.webSocketService
         .connect()
         .then(() => {
-          this.webSocketService.sendMessage({ content: '0', type: 'get old' })
+          this.webSocketService?.sendMessage({ content: '0', type: 'get old' })
         })
         .catch((error) => {
           console.error('Connection error:', error)

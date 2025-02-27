@@ -48,7 +48,7 @@ export default class Profile extends Block<ProfileProps> {
         login: user.login,
         email: user.email,
         phone: user.phone,
-        avatar: `${API_CONFIG.BASE_URL}/resources${user.avatar}` || 'avatar.png',
+        avatar: user.avatar ? `${API_CONFIG.BASE_URL}/resources${user.avatar}` : 'avatar.png',
       }
       this.setProps({ userData })
     } catch (error) {

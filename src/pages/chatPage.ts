@@ -7,6 +7,7 @@ export default function ChatPage(): Block {
     chatName: '',
     avatar: '',
     messages: [],
+    chats: [],
     onSendMessage: (message) => {
       console.log(message)
       chatDisplay.renderMessages()
