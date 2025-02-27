@@ -2,7 +2,7 @@
   "extends": "stylelint-config-standard",
   "rules": {
     "color-hex-length": "short",
-    "color-function-notation": "modern",
+    "color-function-notation": null,
     "alpha-value-notation": "percentage",
     "import-notation": "url",
     "selector-class-pattern": null,

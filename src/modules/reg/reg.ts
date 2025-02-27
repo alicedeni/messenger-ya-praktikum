@@ -5,12 +5,20 @@ import { Block } from '../../core/Block'
 import { compileTemplate } from '../../utils/template'
 import templateSource from './reg.hbs'
 import { validateInput, PatternType } from '../../utils/validation'
+import router from '../../core/Router'
+import { AuthService } from '../../services/authService'
+import { sanitizeHTML } from '../../utils/helpers'
+
+const authService = new AuthService()
 
 const appElement = document.getElementById('app')
 
 export default class Reg extends Block<Record<string, unknown>> {
+  private isValid: boolean
+
   constructor(props: Record<string, unknown> = {}) {
     super(props)
+    this.isValid = false
   }
 
   render(): string {
@@ -55,7 +63,7 @@ export default class Reg extends Block<Record<string, unknown>> {
 
     const submitButton = new Button({
       text: 'Sign Up',
-      onClick: (e: MouseEvent) => {
+      onClick: async (e: MouseEvent) => {
         e.preventDefault()
         this.validateForm(
           emailInput,
@@ -66,16 +74,33 @@ export default class Reg extends Block<Record<string, unknown>> {
           passwordInput,
           confirmPasswordInput,
         )
-        const formData = {
-          email: emailInput.getValue(),
-          login: loginInput.getValue(),
-          firstName: firstNameInput.getValue(),
-          lastName: lastNameInput.getValue(),
-          phone: phoneInput.getValue(),
-          password: passwordInput.getValue(),
+
+        if (this.isValid) {
+          const formData = {
+            email: sanitizeHTML(emailInput.getValue()),
+            login: sanitizeHTML(loginInput.getValue()),
+            first_name: sanitizeHTML(firstNameInput.getValue()),
+            second_name: sanitizeHTML(lastNameInput.getValue()),
+            phone: sanitizeHTML(phoneInput.getValue()),
+            password: sanitizeHTML(passwordInput.getValue()),
+          }
+
+          try {
+            await authService.signup(formData)
+            router.go('/')
+          } catch (error) {
+            console.error('Sign up failed:', error)
+          }
         }
-        console.log('Form Data:', formData)
       },
+    })
+
+    const singInLink = document.createElement('a')
+    singInLink.href = '/'
+    singInLink.textContent = 'Sign in'
+    singInLink.addEventListener('click', (e) => {
+      e.preventDefault()
+      router.go('/')
     })
 
     this.addValidationListeners(
@@ -100,6 +125,7 @@ export default class Reg extends Block<Record<string, unknown>> {
       confirmPasswordInput: confirmPasswordInput.getContent(),
       submitButton: submitButton.getContent(),
       imageSrc,
+      singInLink: singInLink.outerHTML,
     })
 
     if (appElement) {
@@ -124,28 +150,28 @@ export default class Reg extends Block<Record<string, unknown>> {
   private validateField(input: Input): void {
     const value = input.getValue()
     let type: PatternType | undefined
-
+    /* eslint-disable indent */
     switch (input.props.name) {
-    case 'email':
-      type = 'email'
-      break
-    case 'login':
-      type = 'login'
-      break
-    case 'first_name':
-      type = 'first_name'
-      break
-    case 'last_name':
-      type = 'second_name'
-      break
-    case 'phone':
-      type = 'phone'
-      break
-    case 'password':
-      type = 'password'
-      break
+      case 'email':
+        type = 'email'
+        break
+      case 'login':
+        type = 'login'
+        break
+      case 'first_name':
+        type = 'first_name'
+        break
+      case 'last_name':
+        type = 'second_name'
+        break
+      case 'phone':
+        type = 'phone'
+        break
+      case 'password':
+        type = 'password'
+        break
     }
-
+    /* eslint-enable indent */
     if (type) {
       const isValid = validateInput(value, type)
 
@@ -194,6 +220,8 @@ export default class Reg extends Block<Record<string, unknown>> {
     } else {
       confirmPasswordInput.clearError()
     }
+
+    this.isValid = isValid
 
     if (isValid) {
       console.log('Form is valid!')
