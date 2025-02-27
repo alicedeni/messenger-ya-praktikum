@@ -5,12 +5,20 @@ import { Block } from '../../core/Block'
 import { compileTemplate } from '../../utils/template'
 import templateSource from './auth.hbs'
 import { validateInput, PatternType } from '../../utils/validation'
+import router from '../../core/Router'
+import { AuthService } from '../../services/authService'
+import { sanitizeHTML } from '../../utils/helpers'
+
+const authService = new AuthService()
 
 const appElement = document.getElementById('app')
 
 export default class Auth extends Block<Record<string, unknown>> {
+  private isValid: boolean
+
   constructor(props: Record<string, unknown> = {}) {
     super(props)
+    this.isValid = false
   }
 
   render(): string {
@@ -27,13 +35,30 @@ export default class Auth extends Block<Record<string, unknown>> {
 
     const submitButton = new Button({
       text: 'Sign in',
-      onClick: (e: MouseEvent) => {
+      onClick: async (e: MouseEvent) => {
         e.preventDefault()
         this.validateForm(loginInput, passwordInput)
-        const login = loginInput.getValue()
-        const password = passwordInput.getValue()
-        console.log({ login, password })
+
+        if (this.isValid) {
+          const login = sanitizeHTML(loginInput.getValue())
+          const password = sanitizeHTML(passwordInput.getValue())
+
+          try {
+            await authService.signin({ login, password })
+            router.go('/messenger')
+          } catch (error) {
+            console.error('Sign in failed:', error)
+          }
+        }
       },
+    })
+
+    const createAccountLink = document.createElement('a')
+    createAccountLink.href = '/sign-up'
+    createAccountLink.textContent = 'Create account'
+    createAccountLink.addEventListener('click', (e) => {
+      e.preventDefault()
+      router.go('/sign-up')
     })
 
     this.addValidationListeners(loginInput, passwordInput)
@@ -45,6 +70,7 @@ export default class Auth extends Block<Record<string, unknown>> {
       passwordInput: passwordInput.getContent(),
       submitButton: submitButton.getContent(),
       imageSrc,
+      createAccountLink: createAccountLink.outerHTML,
     })
 
     if (appElement) {
@@ -69,17 +95,18 @@ export default class Auth extends Block<Record<string, unknown>> {
   private validateField(input: Input): void {
     const value = input.getValue()
     let type: PatternType
-
+    /* eslint-disable indent */
     switch (input.props.name) {
-    case 'login':
-      type = 'login'
-      break
-    case 'password':
-      type = 'password'
-      break
-    default:
-      return
+      case 'login':
+        type = 'login'
+        break
+      case 'password':
+        type = 'password'
+        break
+      default:
+        return
     }
+    /* eslint-enable indent */
 
     const isValid = validateInput(value, type)
 
@@ -109,6 +136,8 @@ export default class Auth extends Block<Record<string, unknown>> {
     } else {
       passwordInput.clearError()
     }
+
+    this.isValid = isValid
 
     if (isValid) {
       console.log('Form is valid!')

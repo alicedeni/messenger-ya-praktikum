@@ -4,6 +4,7 @@ import Handlebars from 'handlebars'
 import { Block } from '../../core/Block'
 
 interface Chat {
+  id: string
   name: string
   time: string
   text: string
@@ -23,7 +24,9 @@ export default class ChatList extends Block<ChatListProps> {
 
   render(): string {
     const template = Handlebars.compile(templateSource)
-    return template({ chats: this.props.chats })
+    const renderedContent = template({ chats: this.props.chats })
+    this.init()
+    return renderedContent
   }
 
   init(): void {

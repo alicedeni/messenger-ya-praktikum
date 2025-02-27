@@ -4,6 +4,7 @@ import viteString from 'vite-plugin-string'
 import autoprefixer from 'autoprefixer'
 import precss from 'precss'
 import postcssNesting from 'postcss-nesting'
+import fs from 'fs'
 
 export default defineConfig({
   plugins: [
@@ -13,6 +14,11 @@ export default defineConfig({
     handlebars(),
   ],
   server: {
+    https: {
+      key: fs.readFileSync('../ssl/key.pem'),
+      cert: fs.readFileSync('../ssl/cert.pem'),
+    },
+    host: 'localhost',
     port: 3000,
   },
   css: {

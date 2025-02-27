@@ -10,7 +10,7 @@ export enum HttpMethod {
 export interface RequestOptions {
   method?: HttpMethod
   headers?: Record<string, string>
-  data?: Document | XMLHttpRequestBodyInit | null
+  data?: Document | XMLHttpRequestBodyInit | null | any
   timeout?: number
 }
 
@@ -35,9 +35,17 @@ export class HTTPTransport {
 
       xhr.onload = () => {
         if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.response)
+          try {
+            const response = xhr.response ? JSON.parse(xhr.response) : xhr.response
+            resolve(response)
+          } catch (e) {
+            console.error(e)
+            resolve(xhr.response)
+          }
         } else {
-          reject(new Error(`Request failed with status ${xhr.status}`))
+          reject(
+            new Error(`Request failed with status ${xhr.status}. Response: ${xhr.responseText}`),
+          )
         }
       }
 
@@ -46,7 +54,22 @@ export class HTTPTransport {
 
       Object.entries(headers).forEach(([key, value]) => xhr.setRequestHeader(key, value))
 
-      xhr.send(data || null)
+      xhr.setRequestHeader('Accept', 'application/json')
+      if (!(data instanceof FormData)) {
+        xhr.setRequestHeader('Content-Type', 'application/json')
+      }
+      xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
+      xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true')
+      xhr.setRequestHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+      xhr.withCredentials = true
+
+      if (method === HttpMethod.GET || !data) {
+        xhr.send()
+      } else if (data instanceof FormData) {
+        xhr.send(data)
+      } else {
+        xhr.send(typeof data === 'string' ? data : JSON.stringify(data))
+      }
     })
   }
 }

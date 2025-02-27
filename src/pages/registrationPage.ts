@@ -1,8 +1,7 @@
 import Reg from '../modules/reg/reg'
+import { Block } from '../core/Block'
 
-export default function RegistrationPage(): HTMLElement {
+export default function RegistrationPage(): Block {
   const authComponent = new Reg()
-  authComponent.render()
-
-  return document.createElement('div')
+  return authComponent
 }

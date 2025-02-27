@@ -1,18 +1,17 @@
 import Profile from '../modules/profile/profile'
+import { Block } from '../core/Block'
+import { UserData } from '../modules/profile/profile'
 
-export default function ProfilePage() {
-  const userData = {
-    first_name: 'Ivan',
-    second_name: 'Ivanov',
-    display_name: 'Ivan',
-    login: 'ivanivanov',
-    email: 'pochta@yandex.ru',
-    phone: '+79277113996',
-    avatar: 'avatar.png',
+export default function ProfilePage(): Block {
+  const userData: UserData = {
+    first_name: '',
+    second_name: '',
+    display_name: '',
+    login: '',
+    email: '',
+    phone: '',
+    avatar: '',
   }
-
   const profileComponent = new Profile({ userData })
-  profileComponent.render()
-
-  return document.createElement('div')
+  return profileComponent
 }
