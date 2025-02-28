@@ -13,7 +13,6 @@ export default defineConfig({
     handlebars(),
   ],
   server: {
-    host: 'localhost',
     port: 3000,
   },
   css: {

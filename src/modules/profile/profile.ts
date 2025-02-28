@@ -40,7 +40,6 @@ export default class Profile extends Block<ProfileProps> {
   private async loadUserData() {
     try {
       const user = await authService.getUser()
-      console.log(user)
       const userData: UserData = {
         first_name: user.first_name,
         second_name: user.second_name,

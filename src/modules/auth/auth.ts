@@ -46,8 +46,12 @@ export default class Auth extends Block<Record<string, unknown>> {
           try {
             await authService.signin({ login, password })
             router.go('/messenger')
-          } catch (error) {
-            console.error('Sign in failed:', error)
+          } catch (error: any) {
+            if (error.response && error.response.reason === 'User already in system') {
+              router.go('/messenger')
+            } else {
+              console.error('Sign in failed:', error)
+            }
           }
         }
       },

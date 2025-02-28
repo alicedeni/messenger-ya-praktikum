@@ -28,7 +28,6 @@ export default class ChatList extends Block<ChatListProps> {
 
   render(): string {
     const template = Handlebars.compile(templateSource)
-    console.log(this.props.chats)
 
     const renderedContent = template({
       chats: this.props.chats.map((chat) => ({

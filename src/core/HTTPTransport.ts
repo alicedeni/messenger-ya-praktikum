@@ -43,9 +43,20 @@ export class HTTPTransport {
             resolve(xhr.response)
           }
         } else {
-          reject(
-            new Error(`Request failed with status ${xhr.status}. Response: ${xhr.responseText}`),
-          )
+          try {
+            const errorResponse = JSON.parse(xhr.responseText)
+            reject({
+              error: new Error(
+                `Request failed with status ${xhr.status}. Response: ${xhr.statusText}`,
+              ),
+              response: errorResponse,
+            })
+          } catch (e) {
+            console.error('Error parsing response:', e)
+            reject(
+              new Error(`Request failed with status ${xhr.status}. Response: ${xhr.responseText}`),
+            )
+          }
         }
       }
 
