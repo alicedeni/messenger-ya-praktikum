@@ -23,6 +23,14 @@
             font-size: 18px;
         }
 
+        &-btn {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
     }
 
     &__messages {
@@ -82,4 +90,11 @@
             padding: 20px;
         }
     }
+}
+
+
+.chat-btn, #chat-btn{
+    margin-top: 20px;
+    width: 100%;
+    background-color: var(--color-dark-gray);
 }

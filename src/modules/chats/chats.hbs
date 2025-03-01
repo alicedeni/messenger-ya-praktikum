@@ -3,6 +3,7 @@
     <div class="chat-page__content">
         <aside class="chat-page__content-list">
             {{{chatList}}}
+            <button id="createChatButton" class="chat-btn">New chat</button>
         </aside>
         <main class="chat-page__content-display">
             {{#if chatName}}
@@ -10,6 +11,10 @@
                     <div class="chat-display__header">
                         <img src="{{{avatar}}}" alt="{{{chatName}}}" class="chat-display__header-avatar" />
                         <h2 class="chat-display__header-name">{{{chatName}}}</h2>
+                        <div class="chat-display__header-btn">
+                            <button class="add-user-button" id="chat-btn">Add users</button>
+                            <button class="delete-user-button" id="chat-btn">Delete users</button>
+                        </div>
                     </div>
                     <div class="chat-display__messages">
                         {{{messagesContainer}}}

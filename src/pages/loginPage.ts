@@ -1,8 +1,6 @@
 import Auth from '../modules/auth/auth'
+import { Block } from '../core/Block'
 
-export default function LoginPage(): HTMLElement {
-  const authComponent = new Auth()
-  authComponent.render()
-
-  return document.createElement('div')
+export default function LoginPage(): Block {
+  return new Auth()
 }

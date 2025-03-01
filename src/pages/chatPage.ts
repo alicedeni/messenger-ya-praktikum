@@ -1,29 +1,18 @@
 import Chats from '../modules/chats/chats'
+import { Block } from '../core/Block'
 
-export default function ChatPage(): HTMLElement {
+export default function ChatPage(): Block {
   const chatDisplay = new Chats({
-    chatName: 'Andrey',
-    avatar: 'gray.jpg',
-    messages: [
-      { text: 'Hello!', time: '10:00', isUser: true },
-      { text: 'How are you?', time: '10:05', isUser: false },
-      { text: 'I am fine, thanks!', time: '10:10', isUser: true },
-      { text: 'Great!', time: '10:15', isUser: false },
-    ],
+    chatId: -1,
+    chatName: '',
+    avatar: '',
+    messages: [],
+    chats: [],
     onSendMessage: (message) => {
-      console.log('New message:', message)
-
-      chatDisplay.props.messages.push({
-        text: message,
-        time: new Date().toLocaleTimeString(),
-        isUser: true,
-      })
-
+      console.log(message)
       chatDisplay.renderMessages()
     },
   })
 
-  chatDisplay.render()
-
-  return document.createElement('div')
+  return chatDisplay
 }

@@ -5,8 +5,15 @@ import InputProfile from '../../components/inputProfile/inputProfile'
 import { compileTemplate } from '../../utils/template'
 import Sidebar from '../../components/sidebar/sidebar'
 import { validateInput, PatternType } from '../../utils/validation'
+import router from '../../core/Router'
+import { AuthService } from '../../services/authService'
+import { UserService } from '../../services/userService'
+import { API_CONFIG } from '../../utils/config'
 
-interface UserData {
+const authService = new AuthService()
+const userService = new UserService()
+
+export interface UserData {
   first_name: string
   second_name: string
   display_name: string
@@ -14,6 +21,7 @@ interface UserData {
   email: string
   phone: string
   avatar: string
+  [key: string]: unknown
 }
 
 interface ProfileProps extends Record<string, unknown> {
@@ -26,9 +34,33 @@ export default class Profile extends Block<ProfileProps> {
   constructor(props: ProfileProps) {
     super(props)
     this.sidebar = new Sidebar()
+    this.loadUserData()
+  }
+
+  private async loadUserData() {
+    try {
+      const user = await authService.getUser()
+      const userData: UserData = {
+        first_name: user.first_name,
+        second_name: user.second_name,
+        display_name: user.display_name,
+        login: user.login,
+        email: user.email,
+        phone: user.phone,
+        avatar: user.avatar ? `${API_CONFIG.BASE_URL}/resources${user.avatar}` : 'avatar.png',
+      }
+      this.setProps({ userData })
+    } catch (error) {
+      console.error('Failed to get user data:', error)
+      router.go('/')
+    }
   }
 
   render(): string {
+    if (!this.props.userData) {
+      return 'Loading...'
+    }
+
     const { userData } = this.props
 
     const emailInput = new InputProfile({
@@ -106,10 +138,27 @@ export default class Profile extends Block<ProfileProps> {
   private setEventListeners() {
     const editButton = document.getElementById('editData') as HTMLButtonElement
     const saveButton = document.getElementById('saveData') as HTMLButtonElement
+    const exitButton = document.querySelector('.profile-form__button-exit') as HTMLButtonElement
+    const changePasswordButton = document.getElementById('editPassword') as HTMLButtonElement
 
     if (editButton && saveButton) {
       editButton.addEventListener('click', () => this.enableEditing())
       saveButton.addEventListener('click', () => this.saveChanges())
+    }
+
+    if (exitButton) {
+      exitButton.addEventListener('click', async () => {
+        try {
+          await authService.logout()
+          router.go('/')
+        } catch (error) {
+          console.error('Logout failed:', error)
+        }
+      })
+    }
+
+    if (changePasswordButton) {
+      changePasswordButton.addEventListener('click', () => this.changePassword())
     }
 
     this.addValidationListeners()
@@ -128,25 +177,25 @@ export default class Profile extends Block<ProfileProps> {
   private validateField(inputElement: HTMLInputElement): void {
     const value = inputElement.value
     let type: PatternType | undefined
-
+    /* eslint-disable indent */
     switch (inputElement.name) {
-    case 'email':
-      type = 'email'
-      break
-    case 'login':
-      type = 'login'
-      break
-    case 'first_name':
-      type = 'first_name'
-      break
-    case 'second_name':
-      type = 'second_name'
-      break
-    case 'phone':
-      type = 'phone'
-      break
+      case 'email':
+        type = 'email'
+        break
+      case 'login':
+        type = 'login'
+        break
+      case 'first_name':
+        type = 'first_name'
+        break
+      case 'second_name':
+        type = 'second_name'
+        break
+      case 'phone':
+        type = 'phone'
+        break
     }
-
+    /* eslint-enable indent */
     if (type) {
       const isValid = validateInput(value, type)
 
@@ -176,6 +225,11 @@ export default class Profile extends Block<ProfileProps> {
 
     inputs.forEach((input) => (input.disabled = false))
 
+    const avatarInput = document.getElementById('avatar') as HTMLInputElement
+    if (avatarInput) {
+      avatarInput.style.display = 'block'
+    }
+
     const editButton = document.getElementById('editData') as HTMLButtonElement
     const saveButton = document.getElementById('saveData') as HTMLButtonElement
 
@@ -185,7 +239,7 @@ export default class Profile extends Block<ProfileProps> {
     }
   }
 
-  private saveChanges() {
+  private async saveChanges() {
     let isValid = true
 
     const updatedUserData: UserData = {
@@ -206,24 +260,25 @@ export default class Profile extends Block<ProfileProps> {
     inputs.forEach((input) => {
       const value = input.value
       let type: PatternType | undefined
-
+      /* eslint-disable indent */
       switch (input.name) {
-      case 'email':
-        type = 'email'
-        break
-      case 'login':
-        type = 'login'
-        break
-      case 'first_name':
-        type = 'first_name'
-        break
-      case 'second_name':
-        type = 'second_name'
-        break
-      case 'phone':
-        type = 'phone'
-        break
+        case 'email':
+          type = 'email'
+          break
+        case 'login':
+          type = 'login'
+          break
+        case 'first_name':
+          type = 'first_name'
+          break
+        case 'second_name':
+          type = 'second_name'
+          break
+        case 'phone':
+          type = 'phone'
+          break
       }
+      /* eslint-enable indent */
 
       if (type) {
         const isFieldValid = validateInput(value, type)
@@ -241,7 +296,23 @@ export default class Profile extends Block<ProfileProps> {
       return
     }
 
-    console.log('Updated User Data:', updatedUserData)
+    const avatarInput = document.getElementById('avatar') as HTMLInputElement
+    if (avatarInput) {
+      const avatarFile = avatarInput.files?.[0]
+      if (avatarFile) {
+        const formData = new FormData()
+        formData.append('avatar', avatarFile)
+
+        try {
+          await userService.changeUserAvatar(formData)
+          console.log('Avatar updated successfully')
+        } catch (error) {
+          console.error('Failed to update avatar:', error)
+        }
+      }
+    }
+
+    updatedUserData.avatar = this.props.userData.avatar
 
     inputs.forEach((input) => (input.disabled = true))
 
@@ -252,6 +323,9 @@ export default class Profile extends Block<ProfileProps> {
       editButton.style.display = 'block'
       saveButton.style.display = 'none'
     }
+
+    this.updateProfile(updatedUserData)
+    await this.loadUserData()
   }
 
   private showErrorMessage(inputElement: HTMLInputElement): void {
@@ -275,6 +349,58 @@ export default class Profile extends Block<ProfileProps> {
       errorMessageElement.textContent = ''
       errorMessageElement.style.display = 'none'
       inputElement.classList.remove('input-error')
+    }
+  }
+
+  private async updateProfile(data: UserData) {
+    try {
+      await userService.changeUserProfile(data as Record<string, unknown>)
+      await this.loadUserData()
+      console.log('Profile updated successfully')
+    } catch (error) {
+      console.error('Failed to update profile:', error)
+    }
+  }
+
+  private async changePassword() {
+    const modal = document.getElementById('passwordModal') as HTMLElement
+    const closeButton = document.querySelector('.close-button') as HTMLElement
+    const passwordForm = document.getElementById('changePasswordForm') as HTMLFormElement
+
+    modal.style.display = 'block'
+
+    closeButton.onclick = () => {
+      modal.style.display = 'none'
+    }
+
+    window.onclick = (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none'
+      }
+    }
+
+    passwordForm.onsubmit = async (e) => {
+      e.preventDefault()
+
+      const oldPasswordInput = document.getElementById('oldPassword') as HTMLInputElement
+      const newPasswordInput = document.getElementById('newPassword') as HTMLInputElement
+      const confirmPasswordInput = document.getElementById('confirmPassword') as HTMLInputElement
+
+      if (newPasswordInput.value !== confirmPasswordInput.value) {
+        alert('Passwords do not match')
+        return
+      }
+
+      try {
+        await userService.changeUserPassword({
+          oldPassword: oldPasswordInput.value,
+          newPassword: newPasswordInput.value,
+        })
+        console.log('Password changed successfully')
+        modal.style.display = 'none'
+      } catch (error) {
+        console.error('Failed to change password:', error)
+      }
     }
   }
 }
