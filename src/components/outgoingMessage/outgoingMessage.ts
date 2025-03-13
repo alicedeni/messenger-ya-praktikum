@@ -1,7 +1,7 @@
 import './outgoingMessage.css'
 import templateSource from './outgoingMessage.hbs'
 import Handlebars from 'handlebars'
-import { Block } from '../../core/Block'
+import { Block } from '../../core/Block.ts'
 
 interface OutgoingMessageProps extends Record<string, unknown> {
   text: string

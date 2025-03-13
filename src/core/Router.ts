@@ -1,13 +1,13 @@
-import Route from './Route'
-import { Block } from './Block'
-import { AuthService } from '../services/authService'
+import Route from './Route.ts'
+import { Block } from './Block.ts'
+import { AuthService } from '../services/authService.ts'
 
 const authService = new AuthService()
 
 class Router {
   private static __instance: Router
   private routes: Route[] = []
-  private history: History = window.history
+  private history: string[] = []
   private _currentRoute: Route | null = null
   private _rootQuery: string = ''
   private _protectedRoutes: string[] = ['/messenger', '/settings']
@@ -18,7 +18,6 @@ class Router {
     }
 
     this.routes = []
-    this.history = window.history
     this._currentRoute = null
     this._rootQuery = rootQuery
 
@@ -74,16 +73,24 @@ class Router {
   }
 
   public go(pathname: string): void {
-    this.history.pushState({}, '', pathname)
+    this.history.push(pathname)
+    window.history.pushState({}, '', pathname)
     this._onRoute(pathname)
   }
 
   public back(): void {
-    this.history.back()
+    if (this.history.length > 1) {
+      this.history.pop()
+      const previousPath = this.history[this.history.length - 1]
+      window.history.back()
+      this._onRoute(previousPath)
+    }
   }
 
   public forward(): void {
-    this.history.forward()
+    const nextPath = window.location.pathname
+    window.history.forward()
+    this._onRoute(nextPath)
   }
 
   private getRoute(pathname: string): Route | undefined {
@@ -91,4 +98,4 @@ class Router {
   }
 }
 
-export default new Router('#app')
+export default Router

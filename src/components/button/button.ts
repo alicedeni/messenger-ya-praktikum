@@ -1,7 +1,7 @@
 import './button.css'
 import templateSource from './button.hbs'
 import Handlebars from 'handlebars'
-import { Block } from '../../core/Block'
+import { Block } from '../../core/Block.ts'
 
 interface ButtonProps extends Record<string, unknown> {
   text: string

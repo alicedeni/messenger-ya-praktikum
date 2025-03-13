@@ -1,8 +1,7 @@
 import './sidebar.css'
 import templateSource from './sidebar.hbs'
 import Handlebars from 'handlebars'
-import { Block } from '../../core/Block'
-import router from '../../core/Router'
+import { Block } from '../../core/Block.ts'
 
 const template = Handlebars.compile(templateSource)
 
@@ -27,7 +26,7 @@ export default class Sidebar extends Block<Record<string, unknown>> {
         const href = link.getAttribute('href')
 
         if (href) {
-          router.go(href)
+          (window as any).router.go(href)
         }
       })
     })

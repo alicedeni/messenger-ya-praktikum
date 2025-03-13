@@ -1,13 +1,12 @@
 import './reg.css'
-import Input from '../../components/input/input'
-import Button from '../../components/button/button'
-import { Block } from '../../core/Block'
-import { compileTemplate } from '../../utils/template'
+import Input from '../../components/input/input.ts'
+import Button from '../../components/button/button.ts'
+import { Block } from '../../core/Block.ts'
+import { compileTemplate } from '../../utils/template.ts'
 import templateSource from './reg.hbs'
-import { validateInput, PatternType } from '../../utils/validation'
-import router from '../../core/Router'
-import { AuthService } from '../../services/authService'
-import { sanitizeHTML } from '../../utils/helpers'
+import { validateInput, PatternType } from '../../utils/validation.ts'
+import { AuthService } from '../../services/authService.ts'
+import { sanitizeHTML } from '../../utils/helpers.ts'
 
 const authService = new AuthService()
 
@@ -87,7 +86,7 @@ export default class Reg extends Block<Record<string, unknown>> {
 
           try {
             await authService.signup(formData)
-            router.go('/')
+            ;(window as any).router.go('/')
           } catch (error) {
             console.error('Sign up failed:', error)
           }
@@ -100,7 +99,7 @@ export default class Reg extends Block<Record<string, unknown>> {
     singInLink.textContent = 'Sign in'
     singInLink.addEventListener('click', (e) => {
       e.preventDefault()
-      router.go('/')
+      ;(window as any).router.go('/')
     })
 
     this.addValidationListeners(

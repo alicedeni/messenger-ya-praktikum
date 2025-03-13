@@ -4,8 +4,9 @@
     "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
-    "moduleResolution": "Node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
@@ -16,8 +17,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["node", "mocha", "sinon", "jsdom"]
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules"]
 }

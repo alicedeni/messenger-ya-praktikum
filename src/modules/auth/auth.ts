@@ -1,13 +1,12 @@
 import './auth.css'
-import Input from '../../components/input/input'
-import Button from '../../components/button/button'
-import { Block } from '../../core/Block'
-import { compileTemplate } from '../../utils/template'
+import Input from '../../components/input/input.ts'
+import Button from '../../components/button/button.ts'
+import { Block } from '../../core/Block.ts'
+import { compileTemplate } from '../../utils/template.ts'
 import templateSource from './auth.hbs'
-import { validateInput, PatternType } from '../../utils/validation'
-import router from '../../core/Router'
-import { AuthService } from '../../services/authService'
-import { sanitizeHTML } from '../../utils/helpers'
+import { validateInput, PatternType } from '../../utils/validation.ts'
+import { AuthService } from '../../services/authService.ts'
+import { sanitizeHTML } from '../../utils/helpers.ts'
 
 const authService = new AuthService()
 
@@ -42,13 +41,13 @@ export default class Auth extends Block<Record<string, unknown>> {
         if (this.isValid) {
           const login = sanitizeHTML(loginInput.getValue())
           const password = sanitizeHTML(passwordInput.getValue())
-
+          /* eslint-disable indent */
           try {
             await authService.signin({ login, password })
-            router.go('/messenger')
+            ;(window as any).router.go('/messenger')
           } catch (error: any) {
             if (error.response && error.response.reason === 'User already in system') {
-              router.go('/messenger')
+              (window as any).router.go('/messenger')
             } else {
               console.error('Sign in failed:', error)
             }
@@ -62,7 +61,7 @@ export default class Auth extends Block<Record<string, unknown>> {
     createAccountLink.textContent = 'Create account'
     createAccountLink.addEventListener('click', (e) => {
       e.preventDefault()
-      router.go('/sign-up')
+      ;(window as any).router.go('/sign-up')
     })
 
     this.addValidationListeners(loginInput, passwordInput)

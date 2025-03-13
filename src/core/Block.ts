@@ -1,4 +1,4 @@
-import { EventBus } from './EventBus'
+import { EventBus } from './EventBus.ts'
 
 export class Block<P extends Record<string, unknown> = Record<string, unknown>> {
   private eventBus: EventBus
