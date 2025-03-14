@@ -4,7 +4,7 @@
     "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "skipLibCheck": true,
