@@ -1,2 +1,5 @@
+#!/bin/bash
+
 npm run test
 npm run lint
+npm run stylelint
