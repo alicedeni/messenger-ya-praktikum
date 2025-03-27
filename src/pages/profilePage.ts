@@ -1,6 +1,6 @@
-import Profile from '../modules/profile/profile'
-import { Block } from '../core/Block'
-import { UserData } from '../modules/profile/profile'
+import Profile from '../modules/profile/profile.ts'
+import { Block } from '../core/Block.ts'
+import { UserData } from '../modules/profile/profile.ts'
 
 export default function ProfilePage(): Block {
   const userData: UserData = {

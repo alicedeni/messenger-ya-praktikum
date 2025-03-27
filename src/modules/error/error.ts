@@ -1,7 +1,7 @@
 import './error.css'
 import templateSource from './error.hbs'
 import Handlebars from 'handlebars'
-import { Block } from '../../core/Block'
+import { Block } from '../../core/Block.ts'
 
 interface ErrorLayoutProps extends Record<string, unknown> {
   title: string

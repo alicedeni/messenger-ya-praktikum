@@ -1,5 +1,5 @@
-import { HTTPTransport } from '../core/HTTPTransport'
-import { API_CONFIG } from '../utils/config'
+import { HTTPTransport } from '../core/HTTPTransport.ts'
+import { API_CONFIG } from '../utils/config.ts'
 
 const http = new HTTPTransport()
 

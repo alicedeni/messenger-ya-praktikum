@@ -1,14 +1,13 @@
 import './profile.css'
 import templateSource from './profile.hbs'
-import { Block } from '../../core/Block'
-import InputProfile from '../../components/inputProfile/inputProfile'
-import { compileTemplate } from '../../utils/template'
-import Sidebar from '../../components/sidebar/sidebar'
-import { validateInput, PatternType } from '../../utils/validation'
-import router from '../../core/Router'
-import { AuthService } from '../../services/authService'
-import { UserService } from '../../services/userService'
-import { API_CONFIG } from '../../utils/config'
+import { Block } from '../../core/Block.ts'
+import InputProfile from '../../components/inputProfile/inputProfile.ts'
+import { compileTemplate } from '../../utils/template.ts'
+import Sidebar from '../../components/sidebar/sidebar.ts'
+import { validateInput, PatternType } from '../../utils/validation.ts'
+import { AuthService } from '../../services/authService.ts'
+import { UserService } from '../../services/userService.ts'
+import { API_CONFIG } from '../../utils/config.ts'
 
 const authService = new AuthService()
 const userService = new UserService()
@@ -52,7 +51,7 @@ export default class Profile extends Block<ProfileProps> {
       this.setProps({ userData })
     } catch (error) {
       console.error('Failed to get user data:', error)
-      router.go('/')
+      ;(window as any).router.go('/')
     }
   }
 
@@ -150,7 +149,7 @@ export default class Profile extends Block<ProfileProps> {
       exitButton.addEventListener('click', async () => {
         try {
           await authService.logout()
-          router.go('/')
+          ;(window as any).router.go('/')
         } catch (error) {
           console.error('Logout failed:', error)
         }

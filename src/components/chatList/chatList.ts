@@ -1,9 +1,9 @@
 import './chatList.css'
 import templateSource from './chatList.hbs'
 import Handlebars from 'handlebars'
-import { Block } from '../../core/Block'
-import { API_CONFIG } from '../../utils/config'
-import { sanitizeHTML } from '../../utils/helpers'
+import { Block } from '../../core/Block.ts'
+import { API_CONFIG } from '../../utils/config.ts'
+import { sanitizeHTML } from '../../utils/helpers.ts'
 
 export interface Chat {
   id: string

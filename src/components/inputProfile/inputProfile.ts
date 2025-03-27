@@ -1,7 +1,7 @@
 import './inputProfile.css'
 import templateSource from './inputProfile.hbs'
 import Handlebars from 'handlebars'
-import { Block } from '../../core/Block'
+import { Block } from '../../core/Block.ts'
 
 interface InputProfileProps extends Record<string, unknown> {
   name: string

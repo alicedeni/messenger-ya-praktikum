@@ -1,5 +1,5 @@
-import Chats from '../modules/chats/chats'
-import { Block } from '../core/Block'
+import Chats from '../modules/chats/chats.ts'
+import { Block } from '../core/Block.ts'
 
 export default function ChatPage(): Block {
   const chatDisplay = new Chats({

@@ -1,5 +1,5 @@
-import ErrorLayout from '../modules/error/error'
-import { Block } from '../core/Block'
+import ErrorLayout from '../modules/error/error.ts'
+import { Block } from '../core/Block.ts'
 
 interface ServerErrorProps {
   [key: string]: unknown

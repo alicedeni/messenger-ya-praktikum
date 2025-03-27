@@ -28,5 +28,5 @@ export function compileTemplate(template: string, context: Record<string, unknow
     }
   })
 
-  return tempDiv.firstElementChild as HTMLElement
+  return tempDiv.firstElementChild ? (tempDiv.firstElementChild as HTMLElement) : tempDiv
 }
