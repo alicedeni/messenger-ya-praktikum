@@ -46,7 +46,7 @@ npm run test
 Дизайн можно посмотреть по ссылке:
 [Figma](https://www.figma.com/design/YukTQbnAnPryTqFhR4KTar/Messenger-YaPr?node-id=0-1&p=f&t=nRmr8M7eIWefx0DM-0)
 
-## ## Основные изменения в Спринте 4
+## Основные изменения в Спринте 4
 
 1. Добавление тестов для шаблонизатора, Route и Router, запросника и Block
 
